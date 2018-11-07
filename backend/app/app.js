@@ -6,8 +6,28 @@ const express = require('express'),
 const app = express();
 const userRouter = require('./routes/userRoutes');
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json({ extended: false }));
+app.use((req, res, next) => {
+    res.setHeader("X-Frame-Options", "ALLOWALL");
+    res.setHeader(
+        "Access-Control-Allow-Methods",
+        "POST, GET, PUT, DELETE, OPTIONS"
+    );
+
+    if (req.headers.origin) {
+        res.setHeader("Access-Control-Allow-Origin", req.headers.origin);
+    }
+
+    res.setHeader("Access-Control-Allow-Credentials", true);
+
+    res.setHeader(
+        "Access-Control-Allow-Headers",
+        "Authorization, Origin, X-Requested-With, Content-Type, Accept"
+    );
+    next();
+});
+
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json({extended: false}));
 
 app.get('/', (req, res) => {
     res.send('Welcome to ChatBox API !');
