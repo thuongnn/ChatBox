@@ -4,14 +4,10 @@ import Config from '../utils/Config'
 export const login = (data) => {
     return axios({
         method: 'post',
-        url: Config.base_url + "/api/users",
+        url: Config.base_url + "/api/auth",
         data: {
             'username': data.username,
             'password': data.password,
-        },
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
         }
     })
 };

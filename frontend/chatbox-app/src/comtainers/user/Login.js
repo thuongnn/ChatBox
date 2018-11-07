@@ -1,70 +1,124 @@
 import React, {Component} from 'react';
-import {Row, Col, Input, Icon, Button} from 'antd';
+import {Row, Col, Input, Button, message} from 'antd';
+import {login, register} from '../../modules/User'
 import './Login.css';
 import WithLayout from '../../components/WithLayout'
+import history from "../../utils/History";
 
 class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            userName: '',
-            password: ''
+            inputs: {
+                username: '',
+                password: ''
+            },
+            messageError: {},
+            isLoading: false
         };
     }
 
-    onChangeUserName = (e) => {
-        this.setState({userName: e.target.value});
+    onBlur = (name, value) => {
+        let messageError = this.state.messageError;
+        switch (name) {
+            case 'username':
+                if (!value) {
+                    messageError[name] = "You can't leave this empty.";
+                }
+                break;
+            case 'password':
+                if (!value) {
+                    messageError[name] = "You can't leave this empty.";
+                }
+                break;
+            default:
+                break;
+        }
+        this.setState({
+            messageError
+        })
     };
 
-    onChangePassword = (e) => {
-        console.log(e);
-        this.setState({password: e.target.value});
+    onFocus = (name) => {
+        let messageError = this.state.messageError;
+        delete messageError[name];
+        this.setState({
+            messageError: messageError
+        })
+    };
+
+    onChangeInput = (name, value) => {
+        let state = this.state.inputs;
+        state[name] = value;
+        this.setState({state})
+    };
+
+    onSubmit = () => {
+        let data = {
+            username: this.state.inputs.username,
+            password: this.state.inputs.password,
+        };
+
+        this.setState({isLoading: true});
+
+        login(data).then(res => {
+            console.log(res.data);
+            message.success("Login successfully !");
+            history.push('/');
+            this.setState({isLoading: false});
+        }).catch(err => {
+            console.log(err);
+            message.error("Login error !");
+            this.setState({isLoading: false});
+        });
     };
 
     render() {
-        const {userName, password} = this.state;
+        const inputs = this.state.inputs;
 
         return (
             <div className="login">
                 <Row className="row-input" gutter={16}>
-                    <Col className="gutter-row" span={4}>
+                    <Col className="gutter-row" span={6}>
                         <div className="gutter-box title-input">
                             Username:
                         </div>
                     </Col>
-                    <Col span={20}>
+                    <Col span={18}>
                         <Input
                             className="gutter-box"
                             placeholder="Enter your username"
-                            prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                            value={userName}
-                            onChange={this.onChangeUserName}
-                            ref={node => this.userNameInput = node}
+                            value={inputs.username}
+                            onChange={(e) => this.onChangeInput('username', e.target.value)}
+                            onBlur={(e) => this.onBlur('username', e.target.value)}
+                            onFocus={() => this.onFocus('username')}
                         />
+                        <label className='register-error'>{this.state.messageError.username}</label>
                     </Col>
                 </Row>
                 <Row className="row-input" gutter={16}>
-                    <Col className="gutter-row" span={4}>
+                    <Col className="gutter-row" span={6}>
                         <div className="gutter-box title-input">
                             Password:
                         </div>
                     </Col>
-                    <Col span={20}>
+                    <Col span={18}>
                         <Input
                             className="gutter-box"
                             type="password"
                             placeholder="Enter your password"
-                            prefix={<Icon type="code" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                            value={password}
-                            onChange={this.onChangePassword}
-                            ref={node => this.userNameInput = node}
+                            value={inputs.password}
+                            onChange={(e) => this.onChangeInput('password', e.target.value)}
+                            onBlur={(e) => this.onBlur('password', e.target.value)}
+                            onFocus={() => this.onFocus('password')}
                         />
+                        <label className='register-error'>{this.state.messageError.password}</label>
                     </Col>
                 </Row>
                 <Row className="row-input" gutter={16}>
-                    <Col className="gutter-row" span={4}/>
-                    <Col span={20}>
-                        <Button type="primary" >Sign In</Button>
+                    <Col className="gutter-row" span={6}/>
+                    <Col span={18}>
+                        <Button type="primary" onClick={this.onSubmit}>Sign In</Button>
                         <span> Don't have a account yet? <a href="/register">Sign Up</a></span>
                     </Col>
                 </Row>
