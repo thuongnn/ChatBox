@@ -1,23 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e7265de4-7e0a-405a-8a67-0b9caf094c65" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/frontend/chatbox-app/src/components/Main.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/chatbox-app/src/components/Main.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/chatbox-app/src/components/WithLayout.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/chatbox-app/src/components/WithLayout.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/chatbox-app/src/comtainers/user/Login.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/chatbox-app/src/comtainers/user/Login.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/chatbox-app/src/comtainers/user/Register.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/chatbox-app/src/comtainers/user/Register.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/chatbox-app/src/modules/User.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/chatbox-app/src/utils/History.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/chatbox-app/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/chatbox-app/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/chatbox-app/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/chatbox-app/src/App.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/chatbox-app/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/chatbox-app/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/chatbox-app/src/config/env.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/chatbox-app/src/config/env.json" afterDir="false" />
-    </list>
+    <list default="true" id="e7265de4-7e0a-405a-8a67-0b9caf094c65" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -31,7 +15,7 @@
     <session id="1840325914">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="1" />
+          <entry key="project.closed" value="2" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.5" value="1" />
           <entry key="project.opened" value="2" />
@@ -72,8 +56,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/frontend/chatbox-app/src/comtainers/user/Register.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="395">
-              <caret line="187" column="1" selection-start-line="187" selection-start-column="1" selection-end-line="187" selection-end-column="1" />
+            <state relative-caret-position="136">
+              <caret line="8" column="24" lean-forward="true" selection-start-line="8" selection-start-column="24" selection-end-line="8" selection-end-column="24" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -255,18 +239,17 @@
       <option name="presentableId" value="Default" />
       <updated>1541566286294</updated>
       <workItem from="1541566287562" duration="149000" />
-      <workItem from="1541569097381" duration="14349000" />
+      <workItem from="1541569097381" duration="15310000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="14498000" />
+    <option name="totallyTimeSpent" value="15459000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="28" width="1920" height="1052" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24986821" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24986821" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -278,7 +261,7 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" order="9" visible="true" weight="0.32969433" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.32969433" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -433,8 +416,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/frontend/chatbox-app/src/comtainers/user/Register.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="395">
-          <caret line="187" column="1" selection-start-line="187" selection-start-column="1" selection-end-line="187" selection-end-column="1" />
+        <state relative-caret-position="136">
+          <caret line="8" column="24" lean-forward="true" selection-start-line="8" selection-start-column="24" selection-end-line="8" selection-end-column="24" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
