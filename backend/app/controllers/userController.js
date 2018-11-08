@@ -1,9 +1,10 @@
+const bcrypt = require("bcryptjs");
 const userSchema = require("../models/userSchema");
 
-const createUser = ({username, email, password}) =>
+const createUser = ({username, password}) =>
     new Promise((resolve, reject) => {
         userSchema
-            .create({username, email, password})
+            .create({username, password})
             .then(user => resolve(user._id))
             .catch(err => reject(err));
     });
@@ -11,13 +12,11 @@ const createUser = ({username, email, password}) =>
 const getAllUsers = page =>
     new Promise((resolve, reject) => {
         userSchema
-            .find({
-                active: true
-            })
+            .find({})
             .sort({createdAt: -1})
             .skip((page - 1) * 20)
             .limit(20)
-            .select("_id username email")
+            .select("_id username avatar")
             .exec()
             .then(data => resolve(data))
             .catch(err => reject(err));
@@ -27,27 +26,9 @@ const getOneUser = id =>
     new Promise((resolve, reject) => {
         userSchema
             .findOne({
-                active: true,
                 _id: id
             })
-            .select("_id username email password")
-            .exec()
-            .then(data =>
-                resolve(
-                    Object.assign({}, data._doc, {avatarUrl: `/api/users/${id}/avatar`})
-                )
-            )
-            .catch(err => reject(err));
-    });
-
-const getAvatarData = id =>
-    new Promise((resolve, reject) => {
-        userSchema
-            .findOne({
-                active: true,
-                _id: id
-            })
-            .select("avatar contentType")
+            .select("_id username avatar")
             .exec()
             .then(data => resolve(data))
             .catch(err => reject(err));
@@ -69,22 +50,6 @@ const updateUsername = (id, username) =>
             .catch(err => reject(err));
     });
 
-const updateEmail = (id, email) =>
-    new Promise((resolve, reject) => {
-        userSchema
-            .update(
-                {
-                    _id: id
-                },
-                {
-                    email
-                }
-            )
-            .exec()
-            .then(data => resolve(data))
-            .catch(err => reject(err));
-    });
-
 const updatePassword = (id, password) =>
     new Promise((resolve, reject) => {
         userSchema
@@ -97,40 +62,72 @@ const updatePassword = (id, password) =>
             .catch(err => reject(err));
     });
 
-const updateAvatar = (id, avatarFile) =>
+const updateAvatar = (id, avatarUrl) =>
     new Promise((resolve, reject) => {
         userSchema
             .update(
-                {
-                    _id: id
-                },
-                {
-                    avatar: fs.readFileSync(avatarFile.path),
-                    contentType: avatarFile.mimetype
-                }
+                {_id: id},
+                {avatar: avatarUrl}
             )
             .exec()
             .then(data => resolve(data))
             .catch(err => reject(err));
     });
 
-const deleteUser = id =>
+const getUserForAuth = (username) =>
     new Promise((resolve, reject) => {
         userSchema
-            .update({_id, id}, {active: false})
-            .exec()
-            .then(data => resolve(data._id))
+            .findOne({username: username})
+            .select("username password _id")
+            .then(user => resolve(user))
             .catch(err => reject(err));
     });
+
+const login = ({username, password}) =>
+    new Promise((resolve, reject) => {
+        getUserForAuth(username)
+            .then(user => {
+                if (!user || !user.password) {
+                    reject({
+                        status: 400,
+                        err: "Incorrect username"
+                    });
+                } else {
+                    bcrypt
+                        .compare(password, user.password)
+                        .then(result => {
+                            if (result) {
+                                resolve({username: user.username, id: user._id});
+                            } else {
+                                reject({
+                                    status: 400,
+                                    err: "Incorrect password"
+                                });
+                            }
+                        })
+                        .catch(err =>
+                            reject({
+                                status: 501,
+                                err: err
+                            })
+                        );
+                }
+            })
+            .catch(err =>
+                reject({
+                    status: 501,
+                    err: err
+                })
+            );
+    });
+
 
 module.exports = {
     createUser,
     getAllUsers,
     getOneUser,
     updateUsername,
-    updateEmail,
     updatePassword,
     updateAvatar,
-    deleteUser,
-    getAvatarData
+    login
 };

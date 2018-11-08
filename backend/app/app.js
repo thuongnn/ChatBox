@@ -5,6 +5,7 @@ const express = require('express'),
 
 const app = express();
 const userRouter = require('./routes/userRoutes');
+const authenRouter = require('./routes/authenRoutes');
 
 app.use((req, res, next) => {
     res.setHeader("X-Frame-Options", "ALLOWALL");
@@ -33,6 +34,7 @@ app.get('/', (req, res) => {
     res.send('Welcome to ChatBox API !');
 });
 app.use("/api/users", userRouter);
+app.use("/api/auth", authenRouter);
 
 // Connect to DB
 mongoose.connect(Config.mongoPath, err => {

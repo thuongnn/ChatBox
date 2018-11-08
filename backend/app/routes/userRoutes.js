@@ -53,46 +53,10 @@ router.put("/:id/password", (req, res) => {
         });
 });
 
-router.put("/:id/email", (req, res) => {
+
+router.put("/:id/avatar", (req, res) => {
     userController
-        .updateUsername(req.params.id, req.body.email)
-        .then(id => res.send(id))
-        .catch(err => {
-            console.error(err);
-            res.status(500).send(err);
-        });
-});
-
-router.get("/:id/avatar", (req, res) => {
-    userController
-        .getAvatarData(req.params.id)
-        .then(data => {
-            res.contentType(data.contentType);
-            res.send(data.avatar);
-        })
-        .catch(err => {
-            console.error(err);
-            res.status(500).send(err);
-        });
-});
-
-// router.put("/:id/avatar", upload.single("image"), (req, res) => {
-//     userController
-//         .updateAvatar(req.params.id, req.file)
-//         .then(id => res.send(id))
-//         .catch(err => {
-//             console.error(err);
-//             res.status(500).send(err);
-//         });
-// });
-
-router.delete("/:id", (req, res) => {
-    if (req.session.id !== req.params.id) {
-        return res.status(401).send("Unauthorized!");
-    }
-
-    userController
-        .deleteUser(req.params.id)
+        .updateAvatar(req.params.id, req.avatarUrl)
         .then(id => res.send(id))
         .catch(err => {
             console.error(err);

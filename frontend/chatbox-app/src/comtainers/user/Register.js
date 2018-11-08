@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {Row, Col, Input, Button, message} from 'antd';
-import {register} from '../../modules/User'
+import {register} from '../../modules/User';
 import './Register.css';
 import WithLayout from '../../components/WithLayout';
-import history from '../../utils/History'
+import history from '../../utils/History';
 
 class Login extends Component {
     constructor(props) {
@@ -12,7 +12,6 @@ class Login extends Component {
             inputs: {
                 username: '',
                 password: '',
-                email: '',
                 password_confirmation: ''
             },
             messageError: {},
@@ -26,13 +25,6 @@ class Login extends Component {
             case 'username':
                 if (!value) {
                     messageError[name] = "You can't leave this empty.";
-                }
-                break;
-            case 'email':
-                if (!value) {
-                    messageError.email = "You can't leave this empty.";
-                } else if (!this.checkEmail(value)) {
-                    messageError[name] = "The email is invalid.";
                 }
                 break;
             case 'password':
@@ -49,24 +41,19 @@ class Login extends Component {
                 }
                 break;
             default:
-                messageError = messageError
+                break;
         }
         this.setState({
             messageError
         })
     };
 
-    onFocus = (name, value) => {
+    onFocus = (name) => {
         let messageError = this.state.messageError;
         delete messageError[name];
         this.setState({
             messageError: messageError
         })
-    };
-
-    checkEmail = (value) => {
-        var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return re.test(value);
     };
 
     onChangeInput = (name, value) => {
@@ -78,7 +65,6 @@ class Login extends Component {
     onSubmit = () => {
         let data = {
             username: this.state.inputs.username,
-            email: this.state.inputs.email,
             password: this.state.inputs.password,
         };
 
@@ -86,11 +72,13 @@ class Login extends Component {
 
         register(data).then(res => {
             console.log(res.data);
-            message.success("Register successfully !")
-            history.push('/login')
+            message.success("Register successfully !");
+            history.push('/login');
+            this.setState({isLoading: false});
         }).catch(err => {
             console.log(err);
-            message.error("Register error !")
+            message.error("Register error !");
+            this.setState({isLoading: false});
         });
     };
 
@@ -98,14 +86,14 @@ class Login extends Component {
         const inputs = this.state.inputs;
 
         return (
-            <div className="login">
+            <div className="register">
                 <Row className="row-input" gutter={16}>
-                    <Col className="gutter-row" span={4}>
+                    <Col className="gutter-row" span={6}>
                         <div className="gutter-box title-input">
                             Username:
                         </div>
                     </Col>
-                    <Col span={20}>
+                    <Col span={18}>
                         <Input
                             className="gutter-box"
                             type="text"
@@ -113,37 +101,18 @@ class Login extends Component {
                             value={inputs.username}
                             onChange={(e) => this.onChangeInput('username', e.target.value)}
                             onBlur={(e) => this.onBlur('username', e.target.value)}
-                            onFocus={(e) => this.onFocus('username', e.target.value)}
+                            onFocus={() => this.onFocus('username')}
                         />
                         <label className='register-error'>{this.state.messageError.username}</label>
                     </Col>
                 </Row>
                 <Row className="row-input" gutter={16}>
-                    <Col className="gutter-row" span={4}>
-                        <div className="gutter-box title-input">
-                            Email:
-                        </div>
-                    </Col>
-                    <Col span={20}>
-                        <Input
-                            className="gutter-box"
-                            type="email"
-                            placeholder="Enter your email"
-                            value={inputs.email}
-                            onChange={(e) => this.onChangeInput('email', e.target.value)}
-                            onBlur={(e) => this.onBlur('email', e.target.value)}
-                            onFocus={(e) => this.onFocus('email', e.target.value)}
-                        />
-                        <label className='register-error'>{this.state.messageError.email}</label>
-                    </Col>
-                </Row>
-                <Row className="row-input" gutter={16}>
-                    <Col className="gutter-row" span={4}>
+                    <Col className="gutter-row" span={6}>
                         <div className="gutter-box title-input">
                             Password:
                         </div>
                     </Col>
-                    <Col span={20}>
+                    <Col span={18}>
                         <Input
                             className="gutter-box"
                             type="password"
@@ -151,18 +120,18 @@ class Login extends Component {
                             value={inputs.password}
                             onChange={(e) => this.onChangeInput('password', e.target.value)}
                             onBlur={(e) => this.onBlur('password', e.target.value)}
-                            onFocus={(e) => this.onFocus('password', e.target.value)}
+                            onFocus={() => this.onFocus('password')}
                         />
                         <label className='register-error'>{this.state.messageError.password}</label>
                     </Col>
                 </Row>
                 <Row className="row-input" gutter={16}>
-                    <Col className="gutter-row" span={4}>
+                    <Col className="gutter-row" span={6}>
                         <div className="gutter-box title-input">
                             Password:
                         </div>
                     </Col>
-                    <Col span={20}>
+                    <Col span={18}>
                         <Input
                             className="gutter-box"
                             type="password"
@@ -170,15 +139,15 @@ class Login extends Component {
                             value={inputs.password_confirmation}
                             onChange={(e) => this.onChangeInput('password_confirmation', e.target.value)}
                             onBlur={(e) => this.onBlur('password_confirmation', e.target.value)}
-                            onFocus={(e) => this.onFocus('password_confirmation', e.target.value)}
+                            onFocus={() => this.onFocus('password_confirmation')}
                         />
                         <label className='register-error'>{this.state.messageError.password_confirmation}</label>
                     </Col>
                 </Row>
                 <Row className="row-input" gutter={16}>
-                    <Col className="gutter-row" span={4}/>
-                    <Col span={20}>
-                        <Button type="primary" onClick={this.onSubmit}>Sign In</Button>
+                    <Col className="gutter-row" span={6}/>
+                    <Col span={18}>
+                        <Button type="primary" loading={this.state.isLoading} onClick={this.onSubmit}>Sign In</Button>
                         <span> Already have an account? <a href="/login">Sign In</a></span>
                     </Col>
                 </Row>
