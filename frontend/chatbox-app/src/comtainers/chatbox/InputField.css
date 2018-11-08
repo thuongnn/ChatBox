@@ -1,0 +1,13 @@
+.main-input-field textarea.ant-input{
+    position: absolute; 
+    min-height: 50px;
+    border: none;
+    resize: none;
+    bottom: 0;
+}
+
+.main-input-field textarea.ant-input:focus{
+    border-color: #ffffff;
+    outline: none;
+    box-shadow:none !important;
+}
