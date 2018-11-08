@@ -3,7 +3,8 @@ import {BrowserRouter, Switch, Route} from 'react-router-dom'
 import './Main.css';
 
 import Login from '../comtainers/user/Login';
-import Register from '../comtainers/user/Register'
+import Register from '../comtainers/user/Register';
+import App from '../comtainers/chatbox/App';
 
 class Main extends Component {
     render() {
@@ -13,6 +14,7 @@ class Main extends Component {
                     <Switch>
                         <Route exact path='/login' component={Login}/>
                         <Route exact path='/register' component={Register}/>
+                        <Route exact path='/chatbox' component={App}/>
                     </Switch>
                 </BrowserRouter>
             </div>

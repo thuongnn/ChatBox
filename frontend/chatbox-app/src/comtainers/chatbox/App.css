@@ -1,0 +1,22 @@
+.app-chatbox .ant-radio-button-wrapper {
+    border: none;
+    border-bottom: 1px solid #d9d9d9;
+    border-radius: unset;
+}
+
+.app-chatbox .ant-radio-button-wrapper:first-child {
+    border-radius: unset;
+    border-left: none;
+}
+
+.app-chatbox .ant-radio-button-wrapper:last-child {
+    border-radius: unset;
+    border-bottom: none;
+}
+
+.app-chatbox .col-select-group{
+    height: 400px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    border: 1px solid #d9d9d9;
+}

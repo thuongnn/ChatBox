@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Row, Col} from 'antd';
+import {Row, Col, Card} from 'antd';
 import './WithLayout.css';
 
 const WithLayout = (Component) => {
@@ -9,9 +9,9 @@ const WithLayout = (Component) => {
                 <Row>
                     <Col span={6}/>
                     <Col span={12}>
-                        <div className="content">
+                        <Card style={{width: '80%', marginLeft: '10%'}} className="content">
                             <Component {...this.props}/>
-                        </div>
+                        </Card>
                     </Col>
                     <Col span={6}/>
                 </Row>

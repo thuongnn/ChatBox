@@ -15,7 +15,8 @@ router.post("/", (req, res) => {
     userController
         .login(req.body)
         .then(userInfo => {
-            let output = userInfo;
+            let output = {};
+            output.data = userInfo;
 
             let additionalClaims = {
                 premiumAccount: true
@@ -24,7 +25,7 @@ router.post("/", (req, res) => {
             admin.auth().createCustomToken(String(userInfo.id), additionalClaims)
                 .then((customToken) => {
                     // Send token back to client
-                    output.customToken = customToken;
+                    output.data.customToken = customToken;
                     res.send(output);
                 })
                 .catch((error) => {

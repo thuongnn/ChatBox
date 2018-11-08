@@ -18,6 +18,28 @@ class Login extends Component {
         };
     }
 
+    isValid = () => {
+        let inputs = this.state.inputs;
+        let messageError = this.state.messageError;
+        let count = 0;
+
+        if (!inputs.username) {
+            messageError.username = "You can't leave this empty.";
+            count++;
+        }
+
+        if (!inputs.password) {
+            messageError.password = "You can't leave this empty.";
+            count++;
+        }
+
+        if (count !== 0) {
+            this.setState({messageError});
+            return false;
+        }
+        else return true;
+    };
+
     onBlur = (name, value) => {
         let messageError = this.state.messageError;
         switch (name) {
@@ -54,23 +76,28 @@ class Login extends Component {
     };
 
     onSubmit = () => {
-        let data = {
-            username: this.state.inputs.username,
-            password: this.state.inputs.password,
-        };
+        if (this.isValid()) {
+            let data = {
+                username: this.state.inputs.username,
+                password: this.state.inputs.password,
+            };
 
-        this.setState({isLoading: true});
+            this.setState({isLoading: true});
 
-        login(data).then(res => {
-            console.log(res.data);
-            message.success("Login successfully !");
-            history.push('/');
-            this.setState({isLoading: false});
-        }).catch(err => {
-            console.log(err);
-            message.error("Login error !");
-            this.setState({isLoading: false});
-        });
+            login(data).then(res => {
+                if (res.data.err) message.error(res.data.err);
+                else {
+                    window.localStorage.setItem("session", JSON.stringify(res.data.data));
+                    message.success("Login successfully !");
+                    history.push('/');
+                }
+                this.setState({isLoading: false});
+            }).catch(err => {
+                console.log(err);
+                message.error("Login error !");
+                this.setState({isLoading: false});
+            });
+        }
     };
 
     render() {
@@ -118,7 +145,7 @@ class Login extends Component {
                 <Row className="row-input" gutter={16}>
                     <Col className="gutter-row" span={6}/>
                     <Col span={18}>
-                        <Button type="primary" onClick={this.onSubmit}>Sign In</Button>
+                        <Button type="primary" loading={this.state.isLoading} onClick={this.onSubmit}>Sign In</Button>
                         <span> Don't have a account yet? <a href="/register">Sign Up</a></span>
                     </Col>
                 </Row>
