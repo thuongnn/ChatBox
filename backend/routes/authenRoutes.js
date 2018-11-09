@@ -19,13 +19,16 @@ router.post("/", (req, res) => {
             output.data = userInfo;
 
             let additionalClaims = {
-                premiumAccount: true
+                premiumAccount: true,
+                listAcc: ['12', '34', '35', '36']
             };
 
             admin.auth().createCustomToken(String(userInfo.id), additionalClaims)
                 .then((customToken) => {
                     // Send token back to client
-                    output.data.customToken = customToken;
+                    output.data.firebase = {};
+                    output.data.firebase["customToken"] = customToken;
+
                     res.send(output);
                 })
                 .catch((error) => {

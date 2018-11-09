@@ -1,5 +1,5 @@
 import axios from 'axios'
-import Config from '../utils/Config'
+import Config from '../utils/Config';
 
 export const login = (data) => {
     return axios({

@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {Radio} from 'antd';
 
-import './GroupChat.css';
+import './ListChat.css';
 
-class GroupChat extends Component {
+class ListChat extends Component {
     render() {
         return (
             <div className="radio-group">
@@ -22,4 +22,4 @@ class GroupChat extends Component {
     }
 }
 
-export default GroupChat;
+export default ListChat;

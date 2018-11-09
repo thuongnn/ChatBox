@@ -5,7 +5,7 @@ class MessagesArea extends Component {
     render() {
         return (
             <div className="message-area-container">
-                aa
+
             </div>
         );
     }
