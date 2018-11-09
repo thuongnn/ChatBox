@@ -4,7 +4,7 @@ import './Main.css';
 
 import Login from '../comtainers/user/Login';
 import Register from '../comtainers/user/Register';
-import App from '../comtainers/chatbox/App';
+import App from '../comtainers/Messenger/App';
 
 class Main extends Component {
     render() {

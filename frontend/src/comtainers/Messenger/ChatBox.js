@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import {Divider} from "antd";
-import InputField from "../InputField";
-import MessagesArea from '../MessagesArea'
+import InputField from "../../components/Chatbox/InputField/InputField";
+import MessagesArea from '../../components/Chatbox/MessagesArea/MessagesArea'
 
-import './Chat.css';
+import './Chatbox.css';
 
-class Chat extends Component {
+class ChatBox extends Component {
     render() {
         return (
             <div className="chat-container">
@@ -19,4 +19,4 @@ class Chat extends Component {
     }
 }
 
-export default Chat;
+export default ChatBox;

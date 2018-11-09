@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Input} from 'antd';
 import './InputField.css';
 
-import InputButton from '../../components/InputButton';
+import InputButton from './InputButton';
 
 const {TextArea} = Input;
 
