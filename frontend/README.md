@@ -24,10 +24,10 @@
   }
 }
 ```
-`local` Môi trường chạy trên local  
-`stagging` Đối với môi trường backend đã deploy
-2. **Install package use `yarn install` or `npm install`**
-3. **Run project use `yarn start` or `npm start`**
+`local` Môi trường chạy trên local   
+`stagging` Đối với môi trường backend đã deploy  
+2. **Install package use `yarn install` or `npm install`**  
+3. **Run project use `yarn start` or `npm start`**  
 
 ## Reference
 
