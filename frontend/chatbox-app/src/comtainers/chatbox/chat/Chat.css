@@ -1,0 +1,22 @@
+.chat-container {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+}
+
+.chat-chatbox {
+    flex: 0 1 700px;
+    display: flex;
+    flex-direction: column;
+}
+
+@media (max-width: 700px) {
+    .chat-container {
+        height: 100vh;
+        margin-bottom: 1em;
+    }
+
+    .chat-chatbox {
+        margin: 0;
+    }
+}

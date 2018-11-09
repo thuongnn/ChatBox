@@ -1,13 +1,29 @@
-.main-input-field textarea.ant-input{
-    position: absolute; 
-    min-height: 50px;
-    border: none;
-    resize: none;
-    bottom: 0;
+.input-field-outerContainer {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 auto;
+    border-bottom: 1px solid #d9d9d9;
 }
 
-.main-input-field textarea.ant-input:focus{
+.input-field-container {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+    padding: 5px 10px;
+}
+
+.input-field-container textarea.ant-input{
+    width: calc(100% - 92px);
+    border: none;
+    resize: none;
+}
+
+.input-field-container textarea.ant-input:focus{
     border-color: #ffffff;
     outline: none;
     box-shadow:none !important;
+}
+
+.input-field-container .ant-btn{
+    border: none;
 }
