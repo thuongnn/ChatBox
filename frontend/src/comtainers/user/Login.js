@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Row, Col, Input, Button, message} from 'antd';
-import {login, register} from '../../modules/User'
+import {login} from '../../modules/User';
+import LocalStorage from '../../utils/LocalStorage';
 import './Login.css';
 import WithLayout from '../../components/WithLayout'
 import history from "../../utils/History";
@@ -87,7 +88,7 @@ class Login extends Component {
             login(data).then(res => {
                 if (res.data.err) message.error(res.data.err);
                 else {
-                    window.localStorage.setItem("session", JSON.stringify(res.data.data));
+                    LocalStorage.set("session", res.data);
                     message.success("Login successfully !");
                     history.push('/');
                 }

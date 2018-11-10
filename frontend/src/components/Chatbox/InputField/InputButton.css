@@ -2,3 +2,6 @@
     display: flex;
     flex: 0 0 auto;
 }
+.ant-upload-list {
+    display: none;
+}

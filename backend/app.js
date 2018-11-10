@@ -6,6 +6,7 @@ const express = require('express'),
 const app = express();
 const userRouter = require('./routes/userRoutes');
 const authenRouter = require('./routes/authenRoutes');
+const groupRouter = require('./routes/groupRoutes');
 
 app.use((req, res, next) => {
     res.setHeader("X-Frame-Options", "ALLOWALL");
@@ -35,9 +36,13 @@ app.get('/', (req, res) => {
 });
 app.use("/api/users", userRouter);
 app.use("/api/auth", authenRouter);
+app.use("/api/group", groupRouter);
 
 // Connect to DB
-mongoose.connect(Config.mongoPath, err => {
+mongoose.connect(Config.mongoPath, {
+    useNewUrlParser: true,
+    useCreateIndex: true
+}, err => {
     if (err) console.error(err);
     else console.log("Database connect successful");
 });

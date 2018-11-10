@@ -1,44 +1,38 @@
-import * as firebase from 'firebase';
+import firebaseApp from '../utils/FirebaseApp';
+
 import axios from 'axios';
 import {config} from '../config/firebase.json';
-import LocalStorage from './LocalStorage';
-import ConfigFirebase from "../config/firebase";
-
-const db = firebase.initializeApp(config);
+import LocalStorage from '../utils/LocalStorage';
 
 export const loginFirebase = (access_token) => {
-    firebase.auth().signInWithCustomToken(access_token)
+    firebaseApp.auth().signInWithCustomToken(access_token)
         .then(data => {
-
             let session = LocalStorage.get("session");
 
             // Get data user here.
             data.user.getIdToken().then(idToken => {
                 session.firebase["idToken"] = idToken;
                 session.firebase["refresh_token"] = data.user.refreshToken;
-
-                console.log(session);
                 LocalStorage.set("session", session);
             });
-
         })
         .catch((error) => {
             // Handle Errors here.
             if (error.code === "auth/invalid-custom-token") {
-                console.log(error);
                 let session = LocalStorage.get("session");
                 refreshTokenFirebase(session.firebase.refresh_token)
                     .then(data => {
-                        console.log("Refresh token is: ");
-                        console.log(data);
+                        session["access_token"] = data.data.access_token;
+                        session["id_token"] = data.data.id_token;
+                        session["refresh_token"] = data.data.refresh_token;
+                        LocalStorage.set("session", session);
                     })
                     .catch(err => {
-                        console.log(err)
+                        console.log(err);
+                        LocalStorage.set("err", err);
                     })
             }
         });
-
-    // firebase.auth().setPersistence()
 };
 
 

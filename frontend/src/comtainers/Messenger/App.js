@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import LocalStorage from '../../utils/LocalStorage';
-import * as Firebase from '../../utils/Firebase';
+import * as Firebase from '../../modules/AuthenFirebase';
 import History from '../../utils/History';
 import {message} from "antd";
 
@@ -20,7 +20,7 @@ class App extends Component {
             message.error("You must login first !")
             History.push('/login');
         } else {
-            Firebase.loginFirebase(session.firebase.customToken);
+            Firebase.loginFirebase(session.firebase.access_token);
         }
     }
 
