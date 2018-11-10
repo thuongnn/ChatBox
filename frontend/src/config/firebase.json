@@ -1,0 +1,10 @@
+{
+  "config" : {
+    "apiKey": "AIzaSyDF24Y92PYNWDwp-eGErG3adacySbelg-w",
+    "authDomain": "test-acf65.firebaseapp.com",
+    "databaseURL": "https://test-acf65.firebaseio.com",
+    "projectId": "test-acf65",
+    "storageBucket": "test-acf65.appspot.com",
+    "messagingSenderId": "331254012548"
+  }
+}
