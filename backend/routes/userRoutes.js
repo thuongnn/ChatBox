@@ -64,4 +64,14 @@ router.put("/:id/avatar", (req, res) => {
         });
 });
 
+router.get("/:id/groups", (req, res) => {
+    userController
+        .getListGroups(req.params.id)
+        .then(groups => res.send(groups))
+        .catch(err => {
+            console.error(err);
+            res.status(500).send(err);
+        });
+});
+
 module.exports = router;

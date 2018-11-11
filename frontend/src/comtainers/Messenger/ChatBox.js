@@ -7,12 +7,14 @@ import './Chatbox.css';
 
 class ChatBox extends Component {
     render() {
+        const props = this.props;
+
         return (
             <div className="chat-container">
                 <div className="chat-chatbox">
-                    <MessagesArea/>
+                    <MessagesArea {...props}/>
                     <Divider style={{flex: '0 0 auto', margin: '0'}}/>
-                    <InputField/>
+                    <InputField {...props}/>
                 </div>
             </div>
         );

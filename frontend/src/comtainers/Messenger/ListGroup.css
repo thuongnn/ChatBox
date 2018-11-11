@@ -21,3 +21,7 @@
     border-radius: unset;
     border-bottom: none;
 }
+
+.ant-radio-group-solid > label > span{
+    white-space: nowrap;
+}

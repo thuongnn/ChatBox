@@ -13,7 +13,7 @@
 }
 
 .input-field-container textarea.ant-input{
-    width: calc(100% - 92px);
+    width: calc(100% - 76px);
     border: none;
     resize: none;
 }

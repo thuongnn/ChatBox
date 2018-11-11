@@ -9,7 +9,7 @@ const WithLayout = (Component) => {
                 <Row>
                     <Col span={6}/>
                     <Col span={12}>
-                        <Card style={{width: '80%', marginLeft: '10%'}} className="content">
+                        <Card className="content">
                             <Component {...this.props}/>
                         </Card>
                     </Col>

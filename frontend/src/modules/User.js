@@ -13,7 +13,6 @@ export const login = (data) => {
 };
 
 export const register = (data) => {
-    console.log(data);
     return axios({
         method: 'POST',
         url: Config.base_url + "/api/users",
@@ -25,3 +24,16 @@ export const register = (data) => {
     })
 };
 
+export const getListGroups = (id) => {
+    return axios({
+        method: 'GET',
+        url: `${Config.base_url}/api/users/${id}/groups`
+    })
+};
+
+export const getListUsers = () => {
+    return axios({
+        method: 'GET',
+        url: `${Config.base_url}/api/users`
+    })
+};

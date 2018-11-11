@@ -30,13 +30,14 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json({extended: false}));
+app.disable('etag');
 
 app.get('/', (req, res) => {
     res.send('Welcome to ChatBox API !');
 });
 app.use("/api/users", userRouter);
 app.use("/api/auth", authenRouter);
-app.use("/api/group", groupRouter);
+app.use("/api/groups", groupRouter);
 
 // Connect to DB
 mongoose.connect(Config.mongoPath, {

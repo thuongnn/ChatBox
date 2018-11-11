@@ -1,4 +1,5 @@
 const bcrypt = require("bcryptjs");
+const mongoose = require('mongoose');
 const userSchema = require("../models/userSchema");
 
 const createUser = ({username, password}) =>
@@ -13,10 +14,11 @@ const getAllUsers = page =>
     new Promise((resolve, reject) => {
         userSchema
             .find({})
+            .populate('groups')
             .sort({createdAt: -1})
             .skip((page - 1) * 20)
             .limit(20)
-            .select("_id username avatar")
+            .select("_id username")
             .exec()
             .then(data => resolve(data))
             .catch(err => reject(err));
@@ -28,7 +30,7 @@ const getOneUser = id =>
             .findOne({
                 _id: id
             })
-            .select("_id username avatar")
+            .select("_id username")
             .exec()
             .then(data => resolve(data))
             .catch(err => reject(err));
@@ -121,6 +123,27 @@ const login = ({username, password}) =>
             );
     });
 
+const addGroup = (id, groupId) =>
+    new Promise((resolve, reject) => {
+        userSchema
+            .findByIdAndUpdate({_id: id}, {
+                $push: {groups: mongoose.Types.ObjectId(groupId)}
+            }, {
+                upsert: true
+            })
+            .exec()
+            .then(data => resolve(data))
+            .catch(err => reject(err));
+    });
+
+const getListGroups = (id) =>
+    new Promise((resolve, reject) => {
+        userSchema
+            .find({_id: id})
+            .populate('groups')
+            .then(data => resolve(data))
+            .catch(err => reject(err));
+    });
 
 module.exports = {
     createUser,
@@ -129,5 +152,7 @@ module.exports = {
     updateUsername,
     updatePassword,
     updateAvatar,
-    login
+    login,
+    addGroup,
+    getListGroups
 };

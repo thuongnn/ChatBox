@@ -6,7 +6,7 @@ const userSchema = new Schema(
     {
         username: {type: String, required: true, unique: true},
         password: {type: String, required: true},
-        avatar: {type: String},
+        groups: [{type: mongoose.Schema.ObjectId, ref: 'groups'}],
     },
     {timestamps: {createdAt: "createdAt"}}
 );

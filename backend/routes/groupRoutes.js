@@ -1,8 +1,18 @@
 const express = require("express");
 const router = express.Router();
+const mongoose = require('mongoose');
 const firebaseApp = require('../utils/Firebase');
 
+const userController = require('../controllers/userController');
 const groupController = require("../controllers/groupController");
+
+const arrToObject = (arr) => {
+    let object = {};
+    for (let i = 0; i < arr.length; i++) {
+        object[i] = mongoose.Types.ObjectId(arr[i]).toString();
+    }
+    return object;
+};
 
 router.post('/', (req, res) => {
     groupController.create(req.body)
@@ -12,16 +22,24 @@ router.post('/', (req, res) => {
             firebaseApp.database().ref('/messages/' + group._id).set({
                 name: group.name,
                 code: group.code,
-                members: JSON.stringify(group.members),
+                members: arrToObject(group.members),
                 content: {}
-            })
+            }).catch(err => {
+                console.error(err);
+                res.status(500).send(err);
+            });
+
+            let createPromises = [];
+
+            for (let i = 0; i < group.members.length; i++) {
+                console.log(group.members[i]);
+                createPromises.push(userController.addGroup(group.members[i], group._id))
+            }
+
+            Promise.all(createPromises)
                 .then(() => {
-                    res.send(group.code);
-                })
-                .catch(err => {
-                    console.error(err);
-                    res.status(500).send(err);
-                })
+                    res.send(group)
+                });
         })
         .catch(err => {
             console.error(err);

@@ -2,4 +2,12 @@
     flex: 1 1 auto;
     padding: 10px;
     overflow-y: auto;
+    border-top: 1px solid #e8e8e8;
+    border-right: 1px solid #e8e8e8;
+}
+
+.noMessageNotif {
+    text-align: center;
+    font-size: .8em;
+    color: #777;
 }

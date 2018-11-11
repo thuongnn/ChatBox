@@ -22,16 +22,21 @@ export const loginFirebase = (access_token) => {
                 let session = LocalStorage.get("session");
                 refreshTokenFirebase(session.firebase.refresh_token)
                     .then(data => {
-                        session["access_token"] = data.data.access_token;
-                        session["id_token"] = data.data.id_token;
-                        session["refresh_token"] = data.data.refresh_token;
+                        let firebase = session.firebase;
+                        firebase["access_token"] = data.data.access_token;
+                        firebase["idToken"] = data.data.id_token;
+                        firebase["refresh_token"] = data.data.refresh_token;
+
+                        session.firebase = firebase;
+                        console.log(data.data);
+                        LocalStorage.set("test", data.data);
                         LocalStorage.set("session", session);
                     })
                     .catch(err => {
                         console.log(err);
                         LocalStorage.set("err", err);
                     })
-            }
+            }else LocalStorage.set("err", error)
         });
 };
 

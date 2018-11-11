@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Input} from 'antd';
 import * as DBFirebase from '../../../modules/DBFirebase';
+import * as StorageFirebase from '../../../modules/StorageFirebase';
 import './InputField.css';
 
 import InputButton from './InputButton';
@@ -11,25 +12,30 @@ class InputField extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            message: ''
-        }
+            message: '',
+            isLoadingUploadFile: 0
+        };
+        this.upload = StorageFirebase.SingleUploadThread();
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.currentGroupId !== this.props.currentGroupId)
+            document.getElementById('input-typing-field').focus();
     }
 
     sendMessage = () => {
-        const { user, groupId } = this.props;
-        const { message } = this.state;
+        const {currentUser, currentGroupId} = this.props;
+        const {message} = this.state;
 
         const messageObject = DBFirebase.makeMessage(
             DBFirebase.messageTypes.TEXT,
             message,
-            user
+            currentUser
         );
 
-        if(messageObject) DBFirebase.addMessage(groupId, messageObject);
+        if (messageObject) DBFirebase.addMessage(currentGroupId, messageObject);
 
-        console.log(messageObject);
-
-        this.setState({ message: '' });
+        this.setState({message: ''});
     };
 
     handleKeyDown = (event) => {
@@ -40,6 +46,26 @@ class InputField extends Component {
         }
     };
 
+    handleUpload = async (file) => {
+        if (file.size > StorageFirebase.MAXIMUM_FILE_SIZE) {
+            // this.setState({alertFileIsTooLarge: true});
+            return
+        }
+        this.upload.onProgress(progress => this.setState({isLoadingUploadFile: progress}));
+        const {currentUser, currentGroupId} = this.props;
+        const downloadURL = await this.upload.upFile(file, currentUser.id, currentGroupId);
+        const messageObject = DBFirebase.makeMessage(
+            DBFirebase.messageTypes.FILE,
+            {
+                name: file.name,
+                downloadURL,
+                type: file.type
+            },
+            currentUser
+        );
+
+        if (messageObject) DBFirebase.addMessage(currentGroupId, messageObject)
+    };
 
     render() {
         const state = this.state;
@@ -48,6 +74,7 @@ class InputField extends Component {
             <div className="input-field-outerContainer">
                 <div className="input-field-container">
                     <TextArea
+                        id='input-typing-field'
                         placeholder="Enter the message"
                         autosize
                         value={state.message}
@@ -56,6 +83,8 @@ class InputField extends Component {
                     />
                     <InputButton
                         onSend={this.sendMessage}
+                        handleUpload={this.handleUpload}
+                        isLoadingUploadFile={state.isLoadingUploadFile}
                     />
                 </div>
             </div>

@@ -12,6 +12,7 @@ export const messageTypes = {
 export const addMessage = async (groupId, messageObject) => {
     const messagesRef = getMessagesRef(groupId);
     const key = messagesRef.push().key;
+    console.log(groupId);
     messagesRef.update({
         [key]: {
             ...messageObject,
@@ -35,3 +36,17 @@ export const makeMessage = (type, content, user) => {
     }
 };
 
+export const onMessagesDataChange = (groupId, handler) => {
+    const visibleMessagesRef = getMessagesRef(groupId).orderByChild('timestamp').limitToLast(100);
+    return visibleMessagesRef.on('value', snapshot => {
+        const messages = [];
+        snapshot.forEach(messageSnapshot => {
+            messages.push(messageSnapshot.val())
+        });
+        handler(messages)
+    })
+};
+export const offMessagesDataChange = (groupId, onFunction) => {
+    const visibleMessagesRef = getMessagesRef(groupId).orderByChild('timestamp').limitToLast(100);
+    visibleMessagesRef.off('value', onFunction)
+};

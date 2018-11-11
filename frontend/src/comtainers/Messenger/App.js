@@ -5,12 +5,13 @@ import History from '../../utils/History';
 import {message} from "antd";
 
 import WithLayout from '../../components/WithLayout';
-import ListChat from './ListChat';
+import ListGroup from './ListGroup';
 import ChatBox from './ChatBox';
 import './App.css';
 
 class App extends Component {
     state = {
+        currentGroupId: '',
         session: LocalStorage.get("session")
     };
 
@@ -24,14 +25,31 @@ class App extends Component {
         }
     }
 
+    setCurrentGroupId = (currentGroupId) => this.setState({currentGroupId});
+
     render() {
+        const state = this.state;
+
+        if(!state.session) return "";
+
         return (
-            <div className="app-chat">
-                <div className="col-select-group">
-                    <ListChat/>
+            <div>
+                <div className="app-control">
                 </div>
-                <div className="col-main-chat">
-                    <ChatBox/>
+                <div className="app-chat">
+                    <div className="col-select-group">
+                        <ListGroup
+                            session={state.session}
+                            setCurrentGroupId={this.setCurrentGroupId}
+                            currentGroupId={state.currentGroupId}
+                        />
+                    </div>
+                    <div className="col-main-chat">
+                        <ChatBox
+                            currentUser={state.session.user}
+                            currentGroupId={state.currentGroupId}
+                        />
+                    </div>
                 </div>
             </div>
         );
