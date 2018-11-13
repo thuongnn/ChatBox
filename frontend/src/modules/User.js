@@ -18,7 +18,6 @@ export const register = (data) => {
         url: Config.base_url + "/api/users",
         data: {
             'username': data.username,
-            'email': data.email,
             'password': data.password
         }
     })

@@ -21,16 +21,12 @@ class ListGroup extends Component {
 
     componentDidMount() {
         getListUsers()
-            .then(data => {
-                console.log(Object.values(data.data));
-                this.setState({listUsers: Object.values(data.data)})
-            });
+            .then(data => this.setState({listUsers: Object.values(data.data)}));
 
         getListGroups(this.props.session.user.id)
             .then(data => {
                 let groups = data.data[0].groups;
-                console.log(groups);
-                if(groups.length > 0) this.props.setCurrentGroupId(groups[0]._id);
+                if (groups.length > 0) this.props.setCurrentGroupId(groups[0]._id);
                 this.setState({listGroups: data.data[0].groups})
             });
     }
@@ -79,10 +75,9 @@ class ListGroup extends Component {
         const state = this.state;
         const props = this.props;
 
-        const listOption = state.listUsers.map((user, index) => {
-            if (user._id !== props.session.user.id)
-                return (<Option key={index} value={user._id}>{user.username}</Option>)
-        });
+        const listOption = state.listUsers
+            .filter(user => user._id !== props.session.user.id)
+            .map((user, index) => <Option key={index} value={user._id}>{user.username}</Option>);
         const listGroup = state.listGroups.map((group, index) => {
             return (<Radio.Button key={index} value={group._id}>{group.name}</Radio.Button>)
         });

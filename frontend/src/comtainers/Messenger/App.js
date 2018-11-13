@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import LocalStorage from '../../utils/LocalStorage';
 import * as Firebase from '../../modules/AuthenFirebase';
 import History from '../../utils/History';
-import {message} from "antd";
+import {message, Button} from "antd";
 
 import WithLayout from '../../components/WithLayout';
 import ListGroup from './ListGroup';
@@ -27,14 +27,21 @@ class App extends Component {
 
     setCurrentGroupId = (currentGroupId) => this.setState({currentGroupId});
 
+    onClickLogout = () => {
+        LocalStorage.clear();
+        Firebase.logoutFirebase();
+        History.push('/login');
+    };
+
     render() {
         const state = this.state;
 
-        if(!state.session) return "";
+        if (!state.session) return "";
 
         return (
             <div>
                 <div className="app-control">
+                    <Button type="primary" onClick={this.onClickLogout}>Log out</Button>
                 </div>
                 <div className="app-chat">
                     <div className="col-select-group">

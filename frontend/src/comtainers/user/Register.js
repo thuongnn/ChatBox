@@ -36,7 +36,7 @@ class Login extends Component {
                 }
                 break;
             case 'password_confirmation':
-                if (!value || value != this.state.inputs.password) {
+                if (!value || value !== this.state.inputs.password) {
                     messageError[name] = "Re-password not match !"
                 }
                 break;
@@ -147,7 +147,7 @@ class Login extends Component {
                 <Row className="row-input" gutter={16}>
                     <Col className="gutter-row" span={6}/>
                     <Col span={18}>
-                        <Button type="primary" loading={this.state.isLoading} onClick={this.onSubmit}>Sign In</Button>
+                        <Button type="primary" loading={this.state.isLoading} onClick={this.onSubmit}>Sign Up</Button>
                         <span> Already have an account? <a href="/login">Sign In</a></span>
                     </Col>
                 </Row>

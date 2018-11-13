@@ -1,4 +1,4 @@
-import * as firebase from 'firebase';
+import firebase from 'firebase/app';
 import firebaseApp from '../utils/FirebaseApp';
 
 const database = firebaseApp.database();

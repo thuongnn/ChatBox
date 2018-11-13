@@ -23,10 +23,10 @@ export const File = ({isOwned, file}) => {
 
     if (type.startsWith('image')) return (
         <div style={{display: 'flex', flexDirection: 'column'}}>
-            <a href={URL} target='_blank'>
+            <a href={URL} target='_blank' rel="noopener noreferrer">
                 <img className="message-content-image" src={URL} alt={file.name}/>
             </a>
-            <a href={URL} target='_blank' style={{textAlign: isOwned ? 'right' : 'left'}} className="userName">
+            <a href={URL} target='_blank' rel="noopener noreferrer" style={{textAlign: isOwned ? 'right' : 'left'}} className="userName">
                 <Icon type="cloud-upload"/>
                 {' '}
                 {file.name}

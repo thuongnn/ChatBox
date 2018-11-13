@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom'
-import {Button, Icon} from 'antd';
+import {Button} from 'antd';
 import './InputButton.css'
 
 export default ({onSend, handleUpload, isLoadingUploadFile}) => {
