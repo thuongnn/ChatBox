@@ -9,9 +9,14 @@
     * create access token & claim.
 * Mongoose
     * is a database, use to save data user & group chat.
+* Docker
+    * create nodejs development environment.
 
 ### Getting Started
-1. **Config environment in file `src/config/env.json`**
+1. **Install docker**
+For Ubuntu: [https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-16-04](link here)
+For Window: [https://docs.docker.com/docker-for-windows/install/#where-to-go-next](link here)
+2. **Config environment in file `src/config/env.json`**
 ```
 {
   "env": "stagging",
@@ -26,7 +31,7 @@
 `local` The environment runs on local
 `stagging` For deployed backend environment
 
-2. **Config service account key in file `src/config/serviceAccountKey.json`**
+3. **Config service account key in file `src/config/serviceAccountKey.json`**
 ```
 {
   "type": "service_account",
@@ -43,7 +48,10 @@
 ```
 > Information: [https://firebase.google.com/docs/auth/admin/create-custom-tokens]
 
-3. **Install package use `npm install`**
-4. **Run project**
+4. **Install package use `npm install`**
+5. **Run project**
     * `chatbox/backend`
-    * Run terminal in this folder & run command `gulp`
+    * Run terminal in this folder & run command `docker-compose up --build`
+    * Check api is running [http://localhost:3000/](http://localhost:3000)
+![result](https://firebasestorage.googleapis.com/v0/b/test-acf65.appspot.com/o/message%2F5beeeb92f17ea60008ee9c26%2F5beeeb26f17ea60008ee9c24%2Fcjok8beh90000305mwy5yidmm-Screenshot%20from%202018-11-16%2023-19-33.png?alt=media&token=d9f208aa-3df9-4970-a710-2bd4a911a35f)
+

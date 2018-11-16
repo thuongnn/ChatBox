@@ -1,0 +1,16 @@
+version: '2.1'
+
+services:
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+  backend:
+    image: backend
+    build: .
+    environment:
+      NODE_ENV: production
+    ports:
+      - 3000:3000
+    depends_on:
+      - mongo
