@@ -1,8 +1,7 @@
 .app-control{
     width: 100%;
     height: auto;
-    padding: 5px 0;
-    text-align: right;
+    padding: 10px 0;
 }
 
 .app-chat {

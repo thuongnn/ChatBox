@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import LocalStorage from '../../utils/LocalStorage';
 import * as Firebase from '../../modules/AuthenFirebase';
 import History from '../../utils/History';
-import {message, Button} from "antd";
+import {message, Button, InputNumber, Col, Row} from "antd";
+import {joinGroup} from '../../modules/Group';
 
 import WithLayout from '../../components/WithLayout';
 import ListGroup from './ListGroup';
@@ -11,6 +12,7 @@ import './App.css';
 
 class App extends Component {
     state = {
+        code: 0,
         currentGroupId: '',
         session: LocalStorage.get("session")
     };
@@ -33,6 +35,22 @@ class App extends Component {
         History.push('/login');
     };
 
+    onClickJoinGroup = () => {
+        const {code, session} = this.state;
+        const memberId = session["user"]["id"];
+
+        let data = {};
+        data["memberId"] = memberId;
+        data["code"] = code;
+
+        joinGroup(data).then(() => {
+            message.success("Join group successfully !")
+        }).catch(err => {
+            console.log(err);
+            message.error("Join group failed !")
+        })
+    };
+
     render() {
         const state = this.state;
 
@@ -40,9 +58,16 @@ class App extends Component {
 
         return (
             <div>
-                <div className="app-control">
-                    <Button type="primary" onClick={this.onClickLogout}>Log out</Button>
-                </div>
+                <Row className="app-control">
+                    <Col span={18}>
+                        <span>Code: </span><InputNumber value={state.code} onChange={(code) => this.setState({code})}/>
+                        <Button style={{marginLeft: '5px'}} type="primary" onClick={this.onClickJoinGroup}>Join
+                            group</Button>
+                    </Col>
+                    <Col span={6}>
+                        <Button style={{float: 'right'}} type="primary" onClick={this.onClickLogout}>Log out</Button>
+                    </Col>
+                </Row>
                 <div className="app-chat">
                     <div className="col-select-group">
                         <ListGroup

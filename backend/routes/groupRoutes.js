@@ -78,9 +78,22 @@ router.get("/:code/code", (req, res) => {
 });
 
 router.post('/addMember', (req, res) => {
-    groupController.addMember(req.body)
+    groupController.addMember(req.body.code, req.body.memberId)
         .then(group => {
-            res.send(group);
+            userController.addGroup(req.body.memberId, group._id)
+                .catch(err => {
+                    console.error(err);
+                    res.status(500).send(err);
+                });
+
+            firebaseApp.database().ref(`/messages/${group._id}`).update({
+                members: arrToObject(group.members),
+            }).then(() => {
+                res.send(group);
+            }).catch(err => {
+                console.error(err);
+                res.status(500).send(err);
+            });
         })
         .catch(err => {
             console.error(err);

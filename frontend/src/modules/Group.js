@@ -11,3 +11,15 @@ export const createGroup = (data) => {
         }
     })
 };
+
+export const joinGroup = (data) => {
+    console.log(data);
+    return axios({
+        method: 'POST',
+        url: Config.base_url + "/api/groups/addMember",
+        data: {
+            'code': data.code,
+            'memberId': data.memberId
+        }
+    })
+};

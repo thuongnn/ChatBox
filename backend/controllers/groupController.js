@@ -52,12 +52,15 @@ const getGroupByCode = code =>
             .catch(err => reject(err));
     });
 
-const addMember = (id, memberId) =>
+const addMember = (code, memberId) =>
     new Promise((resolve, reject) => {
         groupSchema
-            .findByIdAndUpdate(id, {
+            .findOneAndUpdate({
+                code
+            }, {
                 $push: {members: mongoose.Types.ObjectId(memberId)}
             }, {
+                new: true,
                 upsert: true
             })
             .exec()
