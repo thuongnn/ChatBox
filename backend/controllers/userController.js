@@ -6,7 +6,7 @@ const createUser = ({username, password}) =>
     new Promise((resolve, reject) => {
         userSchema
             .create({username, password})
-            .then(user => resolve(user._id))
+            .then(user => resolve(user))
             .catch(err => reject(err));
     });
 

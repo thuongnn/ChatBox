@@ -1,0 +1,27 @@
+.list-member {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+}
+
+.list-member .ant-radio-button-wrapper {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #d9d9d9;
+    border-radius: unset;
+}
+
+.list-member .ant-radio-button-wrapper:first-child {
+    border-radius: unset;
+    border-left: none;
+}
+
+.list-member .ant-radio-button-wrapper:last-child {
+    border-radius: unset;
+    border-bottom: none;
+}
+
+.ant-list-member-solid > label > span{
+    white-space: nowrap;
+}

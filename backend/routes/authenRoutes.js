@@ -1,15 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const admin = require('firebase-admin');
-var serviceAccount = require("../config/serviceAccountKey.json");
+const firebaseApp = require('../utils/Firebase');
 
 const userController = require("../controllers/userController");
-
-admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    databaseURL: "https://test-acf65.firebaseio.com"
-});
-
 
 router.post("/", (req, res) => {
     userController
@@ -22,7 +15,7 @@ router.post("/", (req, res) => {
                 premiumAccount: true
             };
 
-            admin.auth().createCustomToken(String(userInfo.id), additionalClaims)
+            firebaseApp.auth().createCustomToken(String(userInfo.id), additionalClaims)
                 .then((customToken) => {
                     // Send token back to client
                     output.firebase = {};

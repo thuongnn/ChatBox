@@ -1,13 +1,16 @@
 import React, {Component} from 'react';
 import LocalStorage from '../../utils/LocalStorage';
-import * as Firebase from '../../modules/AuthenFirebase';
+import {AuthService} from '../../modules/AuthenFirebase';
 import History from '../../utils/History';
 import {message, Button} from "antd";
 
 import WithLayout from '../../components/WithLayout';
 import ListGroup from './ListGroup';
+import ListMember from './ListMember';
 import ChatBox from './ChatBox';
 import './App.css';
+
+const authService = new AuthService();
 
 class App extends Component {
     state = {
@@ -21,7 +24,8 @@ class App extends Component {
             message.error("You must login first !")
             History.push('/login');
         } else {
-            Firebase.loginFirebase(session.firebase.access_token);
+            authService.access_token = session.firebase.access_token;
+            authService.loginFirebase();
         }
     }
 
@@ -29,7 +33,7 @@ class App extends Component {
 
     onClickLogout = () => {
         LocalStorage.clear();
-        Firebase.logoutFirebase();
+        authService.logoutFirebase();
         History.push('/login');
     };
 
@@ -39,7 +43,9 @@ class App extends Component {
         if (!state.session) return "";
 
         return (
-            <div>
+            <div onMouseMove={() => {
+                authService.mouseMove()
+            }}>
                 <div className="app-control">
                     <Button type="primary" onClick={this.onClickLogout}>Log out</Button>
                 </div>
@@ -54,6 +60,12 @@ class App extends Component {
                     <div className="col-main-chat">
                         <ChatBox
                             currentUser={state.session.user}
+                            currentGroupId={state.currentGroupId}
+                        />
+                    </div>
+                    <div className="col-select-member">
+                        <ListMember
+                            session={state.session}
                             currentGroupId={state.currentGroupId}
                         />
                     </div>

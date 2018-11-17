@@ -46,7 +46,23 @@ export const onMessagesDataChange = (groupId, handler) => {
         handler(messages)
     })
 };
+
 export const offMessagesDataChange = (groupId, onFunction) => {
     const visibleMessagesRef = getMessagesRef(groupId).orderByChild('timestamp').limitToLast(100);
     visibleMessagesRef.off('value', onFunction)
+};
+
+
+export const getMemberByGroup = (groupId, handle) => {
+    if (!groupId) return;
+    database.ref(`messages/${groupId}/members`).once('value', members => {
+        handle(members.val());
+    });
+};
+
+export const userChanged = (userId, handle) => {
+    if (!userId) return;
+    database.ref(`users/${userId}`).on('value', user => {
+        handle(user.val());
+    })
 };

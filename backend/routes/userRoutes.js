@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const firebaseApp = require('../utils/Firebase');
 
 const userController = require("../controllers/userController");
 
@@ -16,7 +17,12 @@ router.get("/", (req, res) => {
 router.post("/", (req, res) => {
     userController
         .createUser(req.body)
-        .then(id => res.send(id))
+        .then(user => {
+            firebaseApp.database().ref(`users/${user.id}`).set({
+                username: user.username
+            });
+            res.send(user.id)
+        })
         .catch(err => {
             console.error(err);
             res.status(500).send(err);
