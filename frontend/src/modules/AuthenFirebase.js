@@ -1,6 +1,7 @@
 import firebaseApp from '../utils/FirebaseApp';
 import LocalStorage from '../utils/LocalStorage';
 import firebase from 'firebase/app';
+import config from '../utils/Config';
 
 const database = firebaseApp.database();
 
@@ -8,7 +9,7 @@ export class AuthService {
     constructor(access_token) {
         this.userId = "";
         this.timer = 0;
-        this.counter = 5;
+        this.counter = config.maxTimeToOffline;
         this.access_token = access_token;
 
         firebaseApp.auth().onAuthStateChanged(user => {
@@ -62,7 +63,7 @@ export class AuthService {
     updateOnAway = () => this.timer = window.setTimeout(this.countDown, 1000);
 
     mouseMove = () => {
-        if (this.timer) this.counter = 5;
+        if (this.timer) this.counter = config.maxTimeToOffline;
         else {
             this.updateStatus("online");
             this.updateOnAway()
@@ -77,7 +78,6 @@ export class AuthService {
     };
 
     countDown = () => {
-        console.log(this.counter);
         this.counter = this.counter - 1;
         if (this.counter === 0) {
             window.clearTimeout(this.timer);
