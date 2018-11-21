@@ -33,6 +33,7 @@ class ListMember extends Component {
     dataChanged = (userId) => {
         const {listUser} = this.state;
         userChanged(userId, user => {
+            console.log(user);
             listUser[userId] = user;
             this.setState({listUser})
         })

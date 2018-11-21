@@ -18,7 +18,8 @@ router.post("/", (req, res) => {
     userController
         .createUser(req.body)
         .then(user => {
-            firebaseApp.database().ref(`users/${user.id}`).set({
+            console.log(user);
+            firebaseApp.database().ref(`users/${user._id}`).set({
                 username: user.username
             });
             res.send(user.id)
